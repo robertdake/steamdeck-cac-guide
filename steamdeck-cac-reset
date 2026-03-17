@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Resetting CAC environment..."
+
+echo "Restarting smart card service..."
+
+sudo systemctl restart pcscd
+
+echo "Clearing Firefox NSS database..."
+
+rm -rf ~/.pki/nssdb
+
+echo "Reset complete."

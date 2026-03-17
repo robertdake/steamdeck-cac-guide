@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Reading CAC information..."
+echo ""
+
+pkcs11-tool \
+--module /usr/lib/pkcs11/opensc-pkcs11.so \
+--list-objects
