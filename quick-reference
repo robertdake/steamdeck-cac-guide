@@ -1,0 +1,40 @@
+
+# Steam Deck CAC Quick Reference
+
+## Install Middleware
+
+```bash
+sudo pacman -S pcsclite ccid opensc firefox
+```
+
+## Start CAC Services
+
+```bash
+sudo systemctl enable pcscd
+sudo systemctl start pcscd
+```
+
+## Detect Reader
+
+```bash
+pcsc_scan
+```
+
+## List CAC Certificates
+
+```bash
+pkcs11-tool --module /usr/lib/pkcs11/opensc-pkcs11.so -L
+```
+
+## Restart Smart Card Service
+
+```bash
+sudo systemctl restart pcscd
+```
+
+## Restart Firefox
+
+```bash
+pkill firefox
+firefox
+```
