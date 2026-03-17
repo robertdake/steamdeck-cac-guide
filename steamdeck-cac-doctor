@@ -1,0 +1,51 @@
+#!/bin/bash
+
+echo "SteamDeck CAC Doctor"
+echo ""
+
+echo "Checking pcscd service..."
+
+if systemctl is-active --quiet pcscd; then
+ echo "✔ pcscd running"
+else
+ echo "✖ pcscd NOT running"
+fi
+
+echo ""
+
+echo "Checking reader..."
+
+if pcsc_scan -n 2>/dev/null | grep -q Reader; then
+ echo "✔ CAC reader detected"
+else
+ echo "✖ No reader detected"
+fi
+
+echo ""
+
+echo "Checking CAC token..."
+
+if pkcs11-tool --module /usr/lib/pkcs11/opensc-pkcs11.so -L 2>/dev/null | grep -q token; then
+ echo "✔ CAC detected"
+else
+ echo "✖ CAC not detected"
+fi
+
+echo ""
+
+echo "Checking Firefox..."
+
+if command -v firefox >/dev/null; then
+ echo "✔ Firefox installed"
+else
+ echo "✖ Firefox missing"
+fi
+
+echo ""
+
+echo "Checking Flatpak Firefox..."
+
+if flatpak list | grep -q org.mozilla.firefox; then
+ echo "⚠ Flatpak Firefox detected"
+ echo "Recommendation: install native Firefox"
+fi
