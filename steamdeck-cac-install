@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo "SteamDeck CAC Installer"
+
+sudo steamos-readonly disable
+
+echo "Installing packages..."
+
+sudo pacman -Sy --noconfirm \
+pcsclite \
+ccid \
+opensc \
+pcsc-tools \
+firefox \
+nss
+
+echo "Enabling smart card service..."
+
+sudo systemctl enable pcscd
+sudo systemctl start pcscd
+
+echo "Installing DoD certificates..."
+
+CERTDIR=$HOME/dod-certs
+mkdir -p $CERTDIR
+cd $CERTDIR
+
+curl -O https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/unclass-certificates_pkcs7_DoD.zip
+
+unzip -o unclass-certificates_pkcs7_DoD.zip
+
+echo "Setup complete."
